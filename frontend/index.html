@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor Ambiental</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E1F5EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a7 7 0 0 0-7 7c0 4 3 6 5 9h4c2-3 5-5 5-9a7 7 0 0 0-7-7z"/>
+        <line x1="12" y1="18" x2="12" y2="22"/>
+        <line x1="9" y1="22" x2="15" y2="22"/>
+      </svg>
+    </div>
+    <div class="brand-name">Monitor Ambiental</div>
+    <div class="brand-sub">Sistema de monitoreo continuo</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-section">Navegación</div>
+    <button class="nav-item active" onclick="goTo('principal', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Principal
+    </button>
+    <button class="nav-item" onclick="goTo('ultimo-sensoreo', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Último sensoreo
+    </button>
+    <button class="nav-item" onclick="goTo('registros', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Registros actuales
+    </button>
+    <button class="nav-item" onclick="goTo('registros-ant', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Registros anteriores
+    </button>
+
+    <div class="nav-section" style="margin-top:8px;">Recursos</div>
+    <button class="nav-item" onclick="goTo('manual', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Manual de usuario
+    </button>
+    <button class="nav-item" onclick="goTo('comentarios', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Comentarios
+    </button>
+    <button class="nav-item" onclick="goTo('nosotros', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Sobre nosotros
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <span id="theme-label">Modo oscuro</span>
+    </button>
+    <button class="nav-item nav-exit" onclick="confirmExit()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Salir del sistema
+    </button>
+  </div>
+</aside>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="main">
+
+  <!-- ── PRINCIPAL ── -->
+  <section class="page active" id="page-principal">
+    <div class="page-header">
+      <h1>Panel Principal</h1>
+      <p>Bienvenido al sistema de monitoreo ambiental continuo</p>
+    </div>
+
+    <div class="welcome-banner">
+      <div class="welcome-badge"><span class="pulse"></span> Sistema activo</div>
+      <h2>🌿 Bienvenido al Monitor Ambiental</h2>
+      <p>Este sistema registra en tiempo real las condiciones del ambiente — temperatura, humedad y CO₂ — a través de sensores conectados. Su objetivo es facilitar el análisis continuo del entorno para generar mejores condiciones de trabajo y bienestar.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon si-green" style="float:right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+        </div>
+        <div class="stat-label">Temperatura actual</div>
+        <div class="stat-value">22<span class="stat-unit">°C</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-blue" style="float:right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <div class="stat-label">Humedad relativa</div>
+        <div class="stat-value">58<span class="stat-unit">%</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-amber" style="float:right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 14.5A5 5 0 0 0 12 10a5 5 0 0 0-5 5c0 1.8 1 3.4 2.5 4.3L12 22l2.5-2.7c1.5-.9 2.5-2.5 2.5-4.3z"/><path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83"/></svg>
+        </div>
+        <div class="stat-label">CO₂</div>
+        <div class="stat-value">842<span class="stat-unit">ppm</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-green" style="float:right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="stat-label">Registros hoy</div>
+        <div class="stat-value">48</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">¿Qué hace este sistema?</div>
+        <ul class="step-list">
+          <li>Registra datos del sensor Arduino cada 30 minutos automáticamente.</li>
+          <li>Guarda el historial completo con validez de 2 meses.</li>
+          <li>Analiza la calidad del aire y genera recomendaciones.</li>
+          <li>Compara mediciones para detectar tendencias.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Estado del sistema</div>
+        <ul class="rec-list">
+          <li class="rec-item rec-good">
+            <svg class="rec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Sensor conectado y funcionando correctamente
+          </li>
+          <li class="rec-item rec-good">
+            <svg class="rec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Base de datos sincronizada
+          </li>
+          <li class="rec-item rec-mid">
+            <svg class="rec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg>
+            CO₂ ligeramente elevado — ventilación recomendada
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ÚLTIMO SENSOREO ── -->
+  <section class="page" id="page-ultimo-sensoreo">
+    <div class="page-header">
+      <h1>Último sensoreo</h1>
+      <p>Datos más recientes del sensor con comparación y recomendaciones</p>
+    </div>
+
+    <div class="countdown-box">
+      <div>
+        <div class="cd-label">Próxima actualización en</div>
+      </div>
+      <div class="cd-bar-wrap">
+        <div class="cd-bar" id="cd-bar" style="width:100%"></div>
+      </div>
+      <div class="cd-timer" id="countdown">00:10</div>
+    </div>
+
+    <div class="sensor-grid">
+      <div class="sensor-metric">
+        <div class="sensor-metric-label">🌡 Temperatura</div>
+        <div><span class="sensor-metric-value">22</span><span class="sensor-metric-unit">°C</span></div>
+        <div class="sensor-compare cmp-down">
+          <span class="cmp-arrow">↓</span>
+          <span>1.2°C respecto al anterior — <strong>mejoró</strong></span>
+        </div>
+      </div>
+      <div class="sensor-metric">
+        <div class="sensor-metric-label">💧 Humedad</div>
+        <div><span class="sensor-metric-value">58</span><span class="sensor-metric-unit">%</span></div>
+        <div class="sensor-compare cmp-eq">
+          <span class="cmp-arrow">→</span>
+          <span>Sin cambios respecto al anterior</span>
+        </div>
+      </div>
+      <div class="sensor-metric">
+        <div class="sensor-metric-label">🌬 CO₂</div>
+        <div><span class="sensor-metric-value">842</span><span class="sensor-metric-unit">ppm</span></div>
+        <div class="sensor-compare cmp-up">
+          <span class="cmp-arrow">↑</span>
+          <span>+64 ppm respecto al anterior — <strong>empeoró</strong></span>
+        </div>
+      </div>
+      <div class="sensor-metric">
+        <div class="sensor-metric-label">📊 Calidad del aire</div>
+        <div style="margin-top:8px"><span class="badge badge-mid" style="font-size:15px;padding:6px 14px;">Moderado</span></div>
+        <div class="sensor-compare cmp-eq" style="margin-top:10px">
+          <span>Igual clasificación que la lectura previa</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Recomendaciones</div>
+        <ul class="rec-list">
+          <li class="rec-item rec-mid">
+            <svg class="rec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Abrir ventanas por al menos 10 minutos para reducir el CO₂.
+          </li>
+          <li class="rec-item rec-good">
+            <svg class="rec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            La temperatura es confortable (18–26°C óptimo).
+          </li>
+          <li class="rec-item rec-good">
+            <svg class="rec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Humedad dentro del rango saludable (40–70%).
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Comparación con sensoreo anterior</div>
+        <table style="width:100%;font-size:13px;">
+          <thead>
+            <tr>
+              <th style="padding:8px 10px;text-align:left;font-size:11px;color:var(--text-3);text-transform:uppercase;">Parámetro</th>
+              <th style="padding:8px 10px;text-align:right;font-size:11px;color:var(--text-3);text-transform:uppercase;">Anterior</th>
+              <th style="padding:8px 10px;text-align:right;font-size:11px;color:var(--text-3);text-transform:uppercase;">Actual</th>
+              <th style="padding:8px 10px;text-align:right;font-size:11px;color:var(--text-3);text-transform:uppercase;">Δ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:8px 10px;color:var(--text-2);">Temperatura</td>
+              <td style="padding:8px 10px;text-align:right;color:var(--text-1);">23.2°C</td>
+              <td style="padding:8px 10px;text-align:right;color:var(--text-1);">22.0°C</td>
+              <td style="padding:8px 10px;text-align:right;color:#1D9E75;font-weight:600;">-1.2°C ↓</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 10px;color:var(--text-2);">Humedad</td>
+              <td style="padding:8px 10px;text-align:right;color:var(--text-1);">58%</td>
+              <td style="padding:8px 10px;text-align:right;color:var(--text-1);">58%</td>
+              <td style="padding:8px 10px;text-align:right;color:var(--text-3);font-weight:600;">0% →</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 10px;color:var(--text-2);">CO₂</td>
+              <td style="padding:8px 10px;text-align:right;color:var(--text-1);">778 ppm</td>
+              <td style="padding:8px 10px;text-align:right;color:var(--text-1);">842 ppm</td>
+              <td style="padding:8px 10px;text-align:right;color:#E24B4A;font-weight:600;">+64 ↑</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:11.5px;color:var(--text-3);margin-top:12px;">
+          Última lectura: <strong style="color:var(--text-2);">04/06/2026 — 11:30 hs</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REGISTROS ACTUALES ── -->
+  <section class="page" id="page-registros">
+    <div class="page-header">
+      <h1>Registros actuales</h1>
+      <p>Historial del mes en curso — últimas 50 lecturas</p>
+    </div>
+    <div class="filter-bar">
+      <label>Desde</label>
+      <input type="date" id="f-from" value="2026-06-01">
+      <label>Hasta</label>
+      <input type="date" id="f-to" value="2026-06-04">
+      <label>Calidad</label>
+      <select id="f-quality">
+        <option value="">Todas</option>
+        <option value="Buena">Buena</option>
+        <option value="Moderada">Moderada</option>
+        <option value="Crítica">Crítica</option>
+      </select>
+      <button class="btn btn-primary" onclick="filterTable()">Buscar</button>
+      <button class="btn btn-outline" onclick="resetFilter()">Limpiar</button>
+    </div>
+    <div class="table-wrap">
+      <table id="reg-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha y hora</th>
+            <th>Temp. (°C)</th>
+            <th>Humedad (%)</th>
+            <th>CO₂ (ppm)</th>
+            <th>Calidad</th>
+            <th>Sugerencia</th>
+          </tr>
+        </thead>
+        <tbody id="reg-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── REGISTROS ANTERIORES ── -->
+  <section class="page" id="page-registros-ant">
+    <div class="page-header">
+      <h1>Registros anteriores</h1>
+      <p>Historial de los últimos 2 meses — busca por rango de fechas</p>
+    </div>
+    <div class="filter-bar">
+      <label>Desde</label>
+      <input type="date" id="fa-from" value="2026-04-01">
+      <label>Hasta</label>
+      <input type="date" id="fa-to" value="2026-05-31">
+      <button class="btn btn-primary" onclick="filterTableAnt()">Buscar</button>
+      <button class="btn btn-outline" onclick="resetFilterAnt()">Limpiar</button>
+    </div>
+    <div class="table-wrap">
+      <table id="reg-ant-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha y hora</th>
+            <th>Temp. (°C)</th>
+            <th>Humedad (%)</th>
+            <th>CO₂ (ppm)</th>
+            <th>Calidad</th>
+            <th>Sugerencia</th>
+          </tr>
+        </thead>
+        <tbody id="reg-ant-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── MANUAL ── -->
+  <section class="page" id="page-manual">
+    <div class="page-header">
+      <h1>Manual de usuario</h1>
+      <p>Guía completa para usar el sistema de monitoreo</p>
+    </div>
+    <div class="manual-layout">
+      <nav class="manual-nav">
+        <div class="manual-nav-item active"      onclick="scrollManual('intro', this)">Introducción</div>
+        <div class="manual-nav-item"             onclick="scrollManual('navegacion', this)">Navegación</div>
+        <div class="manual-nav-item"             onclick="scrollManual('sensor', this)">Último sensoreo</div>
+        <div class="manual-nav-item"             onclick="scrollManual('registros-m', this)">Registros</div>
+        <div class="manual-nav-item"             onclick="scrollManual('arduino', this)">Arduino</div>
+      </nav>
+      <div class="manual-content" id="manual-scroll">
+        <div class="manual-section" id="m-intro">
+          <h3>Introducción al sistema</h3>
+          <p>El Monitor Ambiental es una plataforma web diseñada para visualizar, analizar y registrar datos de sensores ambientales. Los sensores miden temperatura, humedad y CO₂ de forma periódica y envían los datos a la base de datos.</p>
+          <p>Esta guía explica cómo usar cada sección de la web para que puedas aprovechar al máximo la información disponible.</p>
+        </div>
+        <div class="manual-section" id="m-navegacion">
+          <h3>Cómo navegar por la web</h3>
+          <p>En el lado izquierdo de la pantalla encontrarás el panel de navegación. Desde ahí podés acceder a todas las secciones con un solo clic. El botón de modo claro/oscuro está al pie del panel.</p>
+          <ul class="step-list">
+            <li>Hacé clic en cualquier ítem del menú para ir a esa sección.</li>
+            <li>La sección activa aparece resaltada en el menú lateral.</li>
+            <li>Para salir del sistema, usá el botón "Salir del sistema" al pie del panel.</li>
+          </ul>
+        </div>
+        <div class="manual-section" id="m-sensor">
+          <h3>Sección: Último sensoreo</h3>
+          <p>Muestra los datos más recientes registrados por el sensor. Se actualiza automáticamente con cada nuevo registro de la base de datos. Incluye:</p>
+          <ul class="step-list">
+            <li>Valores actuales de temperatura, humedad y CO₂.</li>
+            <li>Comparación con el sensoreo anterior (↑ empeoró, ↓ mejoró, → igual).</li>
+            <li>Recomendaciones automáticas según los valores detectados.</li>
+            <li>Temporizador de cuenta atrás para la próxima actualización.</li>
+          </ul>
+        </div>
+        <div class="manual-section" id="m-registros-m">
+          <h3>Sección: Registros</h3>
+          <p>La sección de Registros actuales muestra las últimas 50 lecturas del mes en curso. Podés filtrar por rango de fechas y por calidad del aire usando los controles de búsqueda.</p>
+          <p>Los Registros anteriores contienen el historial completo de los últimos 2 meses, también con filtros por fecha.</p>
+        </div>
+        <div class="manual-section" id="m-arduino">
+          <h3>Configuración del Arduino</h3>
+          <p>El sensor Arduino debe estar conectado a la misma red que el servidor. El microcontrolador envía los datos al servidor cada 30 minutos mediante una petición HTTP POST.</p>
+          <ul class="step-list">
+            <li>Conectar el Arduino a la red WiFi configurada.</li>
+            <li>Verificar que el LED verde del sensor esté encendido (estado activo).</li>
+            <li>Si el sensor no envía datos, reiniciarlo con el botón RESET.</li>
+            <li>Ante problemas de conexión, revisar la IP del servidor en el sketch.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMENTARIOS ── -->
+  <section class="page" id="page-comentarios">
+    <div class="page-header">
+      <h1>Comentarios y sugerencias</h1>
+      <p>Compartí tus ideas para mejorar el sistema</p>
+    </div>
+    <div class="comment-form">
+      <h3>Nueva sugerencia</h3>
+      <div class="form-row">
+        <label class="form-label">Tu nombre</label>
+        <input class="form-input" type="text" id="c-name" placeholder="Ej: María García">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Categoría</label>
+        <select class="form-input" id="c-cat" style="cursor:pointer;">
+          <option>Mejora de interfaz</option>
+          <option>Nueva funcionalidad</option>
+          <option>Error / problema</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Tu comentario</label>
+        <textarea class="form-input" id="c-text" rows="4" placeholder="Describí tu idea o sugerencia..."></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="submitComment()">Enviar sugerencia</button>
+    </div>
+    <div id="comments-list"></div>
+  </section>
+
+  <!-- ── SOBRE NOSOTROS ── -->
+  <section class="page" id="page-nosotros">
+    <div class="page-header">
+      <h1>Sobre nosotros</h1>
+      <p>El equipo detrás del proyecto</p>
+    </div>
+    <div class="about-header">
+      <div class="company-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#9FE1CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a7 7 0 0 0-7 7c0 4 3 6 5 9h4c2-3 5-5 5-9a7 7 0 0 0-7-7z"/>
+          <line x1="12" y1="18" x2="12" y2="22"/>
+          <line x1="9" y1="22" x2="15" y2="22"/>
+        </svg>
+      </div>
+      <div>
+        <div class="about-company-name">EcoSense Technologies</div>
+        <div class="about-company-desc">Empresa dedicada al monitoreo ambiental inteligente. Desarrollamos soluciones IoT para medir, analizar y mejorar la calidad del aire en espacios de trabajo y estudio, con el objetivo de generar ambientes más saludables y productivos.</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">Objetivos del proyecto</div>
+      <ul class="step-list">
+        <li>Monitorear continuamente la calidad del ambiente de trabajo.</li>
+        <li>Alertar ante condiciones que afecten la salud o concentración.</li>
+        <li>Generar datos históricos para identificar patrones y tendencias.</li>
+        <li>Facilitar la toma de decisiones para mejorar el entorno.</li>
+      </ul>
+    </div>
+    <p class="card-title" style="margin-bottom:16px;">Equipo de trabajo</p>
+    <div class="team-grid" id="team-grid"></div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
